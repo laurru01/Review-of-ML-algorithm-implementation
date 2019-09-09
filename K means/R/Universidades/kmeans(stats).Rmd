@@ -1,0 +1,105 @@
+---
+title: "K means utilizando la función kmeans del paquete Stats"
+output: html_notebook
+---
+
+```{r}
+library(cluster)
+```
+
+En primer lugar cargamos el dataset que vamos a analizar y obtenemos información sobre él mediante las funciones str y summary:
+
+```{r}
+df = read.csv("./College.csv")
+```
+```{r}
+str(df)
+```
+
+```{r}
+summary(df)
+```
+En primer lugar hay que transformar las variables categóricas en numéricas para poder implementar el algoritmo:
+
+
+```{r}
+df$Private <- as.numeric(df$Private)
+```
+
+```{r}
+df
+```
+
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+
+Ahora utilizamos le función k means del paquete stats para agrupar las universidades en base a sus características:
+
+```{r}
+km <- kmeans(df, centers = 2)
+```
+
+
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+```{r}
+object.size(km)
+```
+
+```{r}
+ss <- silhouette(km$cluster, dist(df))
+mean(ss[, 3])
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+km <- kmeans(df, centers = 3)
+```
+
+
+
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+```{r}
+ss <- silhouette(km$cluster, dist(df))
+mean(ss[, 3])
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+km <- kmeans(df, centers = 4)
+```
+
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+```{r}
+ss <- silhouette(km$cluster, dist(df))
+mean(ss[, 3])
+```

@@ -1,0 +1,110 @@
+---
+title: "K-means con la función KMeans_arma del paquete ClusterR"
+output: html_notebook
+---
+
+```{r}
+library(cluster)
+library(ClusterR)
+```
+
+Cargamos el dataset que vamos a analizar
+
+```{r}
+df = read.csv("./College.csv")
+```
+
+Al igual que en los casos anteriores transformamos las variables categóricas en numéricas:
+
+```{r}
+df$Private <- as.numeric(df$Private)
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+Construímos el modelo 
+
+```{r}
+#km = KMeans_arma(df, clusters = 3, n_iter = 10, "random_subset")
+km = KMeans_arma(df, clusters = 2)
+km_cluster = predict_KMeans(df, km)
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+
+```{r}
+km_cluster
+```
+```{r}
+object.size(km) + object.size(km_cluster)
+```
+
+
+```{r}
+ss <- silhouette(km_cluster, dist(df))
+mean(ss[, 3])
+```
+
+
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+km <- KMeans_arma(df, clusters = 3)
+km_cluster = predict_KMeans(df, km)
+```
+
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+
+```{r}
+km_cluster
+```
+
+```{r}
+ss <- silhouette(km_cluster, dist(df))
+mean(ss[, 3])
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+km <- KMeans_arma(df, clusters = 4)
+km_cluster = predict_KMeans(df, km)
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+
+```{r}
+km
+```
+
+```{r}
+km_cluster
+```
+
+```{r}
+ss <- silhouette(km_cluster, dist(df))
+mean(ss[, 3])
+```
+
