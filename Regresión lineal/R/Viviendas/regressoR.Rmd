@@ -1,0 +1,52 @@
+---
+title: "Regresión lineal utilizando el paquete regressoR"
+output: html_notebook
+---
+```{r}
+library(regressoR)
+library(dplyr)
+```
+
+```{r}
+df = read.csv("./kc_house_data.csv")
+```
+
+
+```{r}
+df <- select(df, -id, -date,-sqft_basement) 
+
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+x <- rl_model('df', 'price')
+exe(x)
+```
+
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+
+```{r}
+print(modelo.rl)
+```
+
+Además el paquete regressoR también incluye la función rl_prediction, la cual nos devuelve las predicciones 
+```{r}
+x <- rl_prediction('df', 'modelo.rl', 'my_prediction')
+exe(x)
+print(head(my_prediction))
+
+```
+
+
+```{r}
+object.size(modelo.rl)
+```
+
+
+

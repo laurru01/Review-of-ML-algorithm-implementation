@@ -1,0 +1,46 @@
+---
+title: "Regresion lineal dataset kc_house_"
+output: html_notebook
+---
+```{r}
+library(stats)
+library(dplyr)
+```
+
+En primer lugar cargamos el dataset que vamos a analizar y obtenemos información sobre él:
+```{r}
+df = read.csv("./kc_house_data.csv")
+```
+
+```{r}
+
+str(df)
+
+```
+
+Eliminamos las columnas id y date puesto que no aportan información relevante al modelo, pues simplemente son marcas etiquetas identificativas. Además es necesario eliminar la columna sqft_basement pues depende linealmente de las demás, lo cual violaría una de las hipótesis del modelo detalladas en la Sección 2.2.3 de esta memoria.
+
+```{r}
+df <- select(df, -id, -date, -sqft_basement) 
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+ins_model <- lm(price ~ ., data = df) 
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+
+```{r}
+summary(ins_model)
+```
+
+```{r}
+object.size(ins_model)
+```
+
