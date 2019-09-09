@@ -1,0 +1,92 @@
+---
+title: "K-means con la función KMeans_rcpp del paquete clusterR"
+output: html_notebook
+---
+```{r}
+library(cluster)
+library(ClusterR)
+```
+
+Cargamos el dataset que vamos a analizar
+
+```{r}
+df = read.csv("./online_shoppers_intention.csv")
+```
+
+Al igual que en los casos anteriores transformamos las variables categóricas en numéricas:
+
+```{r}
+df$Month <- as.numeric(df$Month)
+df$Weekend <- as.numeric(df$Weekend)
+df$Revenue <- as.numeric(df$Revenue)
+df$VisitorType<- as.numeric(df$VisitorType)
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+Construímos el modelo 
+
+```{r}
+#km = KMeans_rcpp(df, clusters = 3, num_init = 5, max_iters = 100, initializer = 'kmeans++')
+km = KMeans_rcpp(df, clusters = 2)
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+```{r}
+ss <- silhouette(km$cluster, dist(df))
+mean(ss[, 3])
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+km = KMeans_rcpp(df, clusters = 3)
+```
+
+```{r}
+object.size(km)
+```
+
+
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+```{r}
+ss <- silhouette(km$cluster, dist(df))
+mean(ss[, 3])
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+km = KMeans_rcpp(df, clusters = 4)
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+km
+```
+
+```{r}
+ss <- silhouette(km$cluster, dist(df))
+mean(ss[, 3])
+```
