@@ -1,0 +1,54 @@
+---
+title: "Regresion lineal dataset insurance.csv"
+output: html_notebook
+---
+
+```{r}
+library(stats)
+```
+
+Al igual que hemos hecho en Python, cargamos el dataset que vamos a analizar. Obtenemos información sobre él mediante la función summary:
+
+```{r}
+df = read.csv("./insurance.csv")
+```
+
+```{r}
+summary(df)
+```
+Ahora vamos a graficar el diagrama de dispersión para poder identificar la correlación entre los pares de variables edad, ICM, nº de hijos y los cargos de la prima del seguro
+
+```{r}
+library(psych)
+pairs(df[c("age", "bmi", "children", "charges")])
+```
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+Por último creamos el modelo de regresión lineal. Nótese que no hemos transformado las variables categóricas en numéricas tal y como hemos hecho en Python. Esto es debido a que las funciones utilizadas en este trabajo para implementar el algoritmo de regresión lineal incorporan un  procedimiento  conocido  como dummy  coding, el cual trasforma las automáticamente las variables categóricas en numéricas.
+
+```{r}
+ins_model <- lm(charges ~ ., data = df) 
+```
+
+Paramos el cronómetro para medir el tiempo que ha tardado en crear y ajustar el modelo.
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+
+Medimos el espacio que ocupa un objeto en R mediante la función object.size()
+
+
+```{r}
+object.size(ins_model)
+```
+
+
+```{r}
+summary(ins_model)
+```
+
+
+

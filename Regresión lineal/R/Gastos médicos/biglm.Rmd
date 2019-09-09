@@ -1,0 +1,41 @@
+---
+title: "Regreción lineal con la función biglm()"
+output: html_notebook
+---
+
+Ahora hacemos lo mismo con la función biglm()
+
+```{r}
+library(DBI)
+library(biglm)
+```
+
+
+```{r}
+df = read.csv("./insurance.csv")
+
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+
+```{r}
+formula <- charges ~ age+sex+bmi+children+smoker+region
+ins_model <- biglm(formula, df) 
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+
+```{r}
+object.size(ins_model)
+```
+
+```{r}
+summary(ins_model)
+```
+
+
+

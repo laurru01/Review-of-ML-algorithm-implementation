@@ -1,0 +1,43 @@
+---
+title: "Regresión lineal utilizando el paquete regressoR"
+output: html_notebook
+---
+
+
+```{r}
+library(regressoR)
+```
+
+```{r}
+df = read.csv("./insurance.csv")
+```
+
+```{r}
+t <- proc.time() # Inicia el cronómetro
+```
+ 
+ 
+Creamos el modelo que por defecto se guarda en una variable llamada 'modelo.rl'
+```{r}
+x <- rl_model('df', 'charges')
+exe(x)
+```
+
+```{r}
+proc.time()-t    # Detiene el cronómetro
+```
+```{r}
+print(modelo.rl)
+```
+
+Además el paquete regressoR también incluye la función rl_prediction, la cual nos devuelve las predicciones de los cargos:
+
+```{r}
+x <- rl_prediction('df', 'modelo.rl', 'my_prediction')
+exe(x)
+print(head(my_prediction))
+
+```
+```{r}
+object.size(modelo.rl)
+```
